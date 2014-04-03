@@ -5,8 +5,9 @@ It is not efficient, but it should be a stop gap measure
 Installation:
 
 ```
-pip install git+git://github.com/rchrd2/pytzconvert.git
+pip install -e git+git://github.com/rchrd2/pytzconvert.git#egg=pytzconvert
 ```
+
  
 
 Example usage:
