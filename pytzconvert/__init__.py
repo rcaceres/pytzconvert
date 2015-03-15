@@ -11,7 +11,7 @@ def convert(dt):
     It is not efficient, but it should be a stop gap measure.
     
     Example usage:
-        start = dateutil.parser.parse(full_event['start']['dateTime'])
+        start = dateutil.parser.parse("2012-11-28T20:00:00-05:00")
         if start.tzinfo:
             start = pytzconvert.convert(start)
     
@@ -21,27 +21,30 @@ def convert(dt):
     
     # Try our short list first
     for tz_name in super_common_timezones:
-        dt_guess = dt_original.astimezone(pytz.timezone(tz_name))
-        if dt_guess.replace(tzinfo=None) == dt_original.replace(tzinfo=None):
+        dt_guess = pytz.timezone(tz_name).localize(dt_naive)
+        if dt_guess == dt_original:
             return dt_guess
     
     # Try larger list second
     for tz_name in pytz.common_timezones:
-        dt_guess = dt_original.astimezone(pytz.timezone(tz_name))
-        if dt_guess.replace(tzinfo=None) == dt_original.replace(tzinfo=None):
+        dt_guess = pytz.timezone(tz_name).localize(dt_naive)
+        if dt_guess == dt_original:
             return dt_guess
     
     raise Exception('Did not find a match :(')
-    
+
 super_common_timezones = \
 [
- 'US/Alaska',
- 'US/Arizona',
- 'US/Central',
  'US/Eastern',
- 'US/Hawaii',
- 'US/Mountain',
  'US/Pacific',
+ 'US/Central',
+ 
+ # Mountain/Arizona are the same as pacific
+ 'US/Mountain',
+ 'US/Arizona',
+ 'US/Alaska',
+ 'US/Hawaii',
+
  'UTC',
  'GMT',
  'America/Adak',

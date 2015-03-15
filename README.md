@@ -10,11 +10,17 @@ pip install -e git+git://github.com/rchrd2/pytzconvert.git#egg=pytzconvert
 
  
 
-Example usage:
+## Example usage:
 
 ```
-start = dateutil.parser.parse(full_event['start']['dateTime'])
+start = dateutil.parser.parse("2012-11-28T20:00:00-05:00")
 if start.tzinfo:
     start = pytzconvert.convert(start)
 ```
     
+
+
+
+## Running tests
+
+    make test
